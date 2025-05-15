@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalog Produk - Alnay.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: 'Cinzel', serif;
+      }
+    </style>
+  </head>
+  <body class="bg-[#FAF6EF] text-gray-800">
+    <!-- Navbar -->
+    <header class="bg-white shadow sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-[#C7A008]">Alnay.id</h1>
+        <nav class="space-x-6">
+          <a href="index.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Beranda</a>
+          <a href="about.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Tentang</a>
+          <a href="products.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Katalog</a>
+          <a href="cart.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Keranjang</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Judul Katalog + Filter -->
+    <section class="py-14 text-center">
+      <h2 class="text-4xl font-bold text-[#C7A008] mb-2">Katalog Produk</h2>
+      <p class="text-gray-700 text-lg mb-6">Temukan perpaduan gaya modern dan nuansa budaya Lampung di setiap pilihan</p>
+      <div class="max-w-sm mx-auto">
+        <select id="filterKategori" class="w-full border border-gray-300 rounded-md p-2 text-gray-700">
+          <option value="semua">Semua Kategori</option>
+          <option value="baju">Baju</option>
+          <option value="outer">Outer</option>
+          <option value="celana">Celana</option>
+          <option value="aksesori">Aksesori</option>
+          <option value="dress">Dress</option>
+          <option value="oneset">One Set</option>
+          <option value="setcouple">Set Couple</option>
+        </select>
+      </div>
+
+      <div class="max-w-sm mx-auto mt-4">
+        <input type="text" id="searchInput" placeholder="Cari produk..." class="w-full border border-gray-300 rounded-md p-2 text-gray-700" />
+      </div>
+    </section>
+
+    <!-- Katalog -->
+    <section id="produkContainer" class="max-w-6xl mx-auto px-6 pb-16 grid md:grid-cols-3 sm:grid-cols-2 gap-8">
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="outer,baju">
+        <img src="../assets/images/produk1.jpg" alt="Outer Tapis" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Outer Tapis Etnik</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp350.000</p>
+          <a
+            href="product-detail.html?nama=Outer%20Tapis%20Etnik&harga=Rp350.000&gambar=../assets/images/produk1.jpg&deskripsi=Outer%20dengan%20kain%20tapis%20tradisional%20Lampung.%20Elegan%20dan%20modern."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="celana">
+        <img src="../assets/images/produk2.jpg" alt="Celana Motif Inuh" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Celana Motif Inuh</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp275.000</p>
+          <a
+            href="product-detail.html?nama=Celana%20Motif%20Inuh&harga=Rp275.000&gambar=../assets/images/produk2.jpg&deskripsi=Celana%20dengan%20motif%20etnik%20Lampung%20yang%20unik%20dan%20nyaman%20digunakan."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="aksesori">
+        <img src="../assets/images/produk3.jpg" alt="Kalung Aksara" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Kalung Aksara Lampung</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp120.000</p>
+          <a
+            href="product-detail.html?nama=Kalung%20Aksara%20Lampung&harga=Rp120.000&gambar=../assets/images/produk3.jpg&deskripsi=Aksesori%20kalung%20dengan%20aksara%20Lampung%20yang%20otentik%20dan%20bernilai%20budaya."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="dress,oneset">
+        <img src="../assets/images/produk4.jpg" alt="Set Outer dan Dress" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Set Outer dan Dress</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp350.000</p>
+          <a
+            href="product-detail.html?nama=Set%20Outer%20dan%20Dress&harga=Rp350.000&gambar=../assets/images/produk4.jpg&deskripsi=Set%20fashion%20berisi%20outer%20dan%20dress%20dengan%20sentuhan%20nuansa%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="dress">
+        <img src="../assets/images/produk5.jpg" alt="Dress FIt Gold" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Dress Fit Gold</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp450.000</p>
+          <a
+            href="product-detail.html?nama=Dress%20Fit%20Gold&harga=Rp450.000&gambar=../assets/images/produk5.jpg&deskripsi=Dress%20elegan%20warna%20emas%20dengan%20siluet%20fit%20dan%20detail%20motif%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="oneset">
+        <img src="../assets/images/produk6.jpg" alt="One Set Red" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">One Set Red</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp200.000</p>
+          <a
+            href="product-detail.html?nama=One%20Set%20Red&harga=Rp200.000&gambar=../assets/images/produk6.jpg&deskripsi=Satu%20set%20busana%20modern%20warna%20merah%20bercorak%20etnik%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="dress">
+        <img src="../assets/images/produk7.jpg" alt="Dress Fit Silver" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Dress Fit Silver</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp450.000</p>
+          <a
+            href="product-detail.html?nama=Dress%20Fit%20Silver&harga=Rp450.000&gambar=../assets/images/produk7.jpg&deskripsi=Dress%20warna%20perak%20dengan%20aksen%20modis%20dan%20detail%20motif%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="dress">
+        <img src="../assets/images/produk8.jpg" alt="Dress Fit Red Lampung" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Dress Fit Red Lampung</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp500.000</p>
+          <a
+            href="product-detail.html?nama=Dress%20Fit%20Red%20Lampung&harga=Rp500.000&gambar=../assets/images/produk8.jpg&deskripsi=Dress%20bernuansa%20merah%20dengan%20ornamen%20tradisional%20Lampung%20yang%20mewah."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="outer">
+        <img src="../assets/images/produk9.jpg" alt="Outer Batik" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Outer Batik</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp50.000</p>
+          <a href="product-detail.html?nama=Outer%20Batik&harga=Rp50.000&gambar=../assets/images/produk9.jpg&deskripsi=Outer%20simple%20dengan%20motif%20batik%20Lampung%20yang%20klasik." class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="setcouple">
+        <img src="../assets/images/produk10.jpg" alt="Set Couple Gold" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Set Couple Gold</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp750.000</p>
+          <a
+            href="product-detail.html?nama=Set%20Couple%20Gold&harga=Rp750.000&gambar=../assets/images/produk10.jpg&deskripsi=Paket%20couple%20serasi%20warna%20emas%20dengan%20desain%20modern%20bermotif%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="baju">
+        <img src="../assets/images/produk11.jpg" alt="Baju Lampung" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Baju Lampung</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp100.000</p>
+          <a
+            href="product-detail.html?nama=Baju%20Lampung&harga=Rp100.000&gambar=../assets/images/produk11.jpg&deskripsi=Baju%20kasual%20dengan%20sentuhan%20kain%20tradisional%20Lampung%20yang%20unik."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <div class="produk bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition" data-kategori="setcouple">
+        <img src="../assets/images/produk12.jpg" alt="Set Couple Silver" class="w-full h-60 object-cover" />
+        <div class="p-4">
+          <h4 class="font-semibold text-lg mb-1 text-gray-800">Set Couple Silver</h4>
+          <p class="text-[#C7A008] font-bold text-md mb-2">Rp750.000</p>
+          <a
+            href="product-detail.html?nama=Set%20Couple%20Silver&harga=Rp750.000&gambar=../assets/images/produk12.jpg&deskripsi=Paket%20busana%20pasangan%20warna%20perak%20dengan%20motif%20modern%20Lampung."
+            class="text-sm text-[#C7A008] hover:underline"
+            >Lihat Detail</a
+          >
+        </div>
+      </div>
+
+      <!-- Tambahkan produk lain sesuai kategori -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white text-center py-6 border-t">
+      <p class="text-gray-600">&copy; 2025 Alnay.id. All rights reserved.</p>
+    </footer>
+
+    <!-- Script Filter -->
+    <script>
+      const filterKategori = document.getElementById('filterKategori');
+      const searchInput = document.getElementById('searchInput');
+      const produkItems = document.querySelectorAll('.produk');
+
+      function filterProduk() {
+        const kategoriDipilih = filterKategori.value.toLowerCase();
+        const keyword = searchInput.value.toLowerCase();
+
+        produkItems.forEach((item) => {
+          const kategoriProduk = item.dataset.kategori.split(',').map((k) => k.trim().toLowerCase());
+          const namaProduk = item.querySelector('h4').textContent.toLowerCase();
+
+          const cocokKategori = kategoriDipilih === 'semua' || kategoriProduk.includes(kategoriDipilih);
+          const cocokKeyword = namaProduk.includes(keyword);
+
+          if (cocokKategori && cocokKeyword) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      }
+
+      filterKategori.addEventListener('change', filterProduk);
+      searchInput.addEventListener('input', filterProduk);
+    </script>
+  </body>
+</html>

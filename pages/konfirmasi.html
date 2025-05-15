@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konfirmasi Pesanan - Alnay.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: 'Cinzel', serif;
+      }
+    </style>
+  </head>
+  <body class="bg-[#FAF6EF] text-gray-800">
+    <!-- Navbar -->
+    <header class="bg-white shadow sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-[#C7A008]">Alnay.id</h1>
+        <nav class="space-x-6">
+          <a href="index.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Beranda</a>
+          <a href="products.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Katalog</a>
+          <a href="cart.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Keranjang</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="max-w-3xl mx-auto py-12 px-4">
+      <h2 class="text-3xl font-bold text-center text-[#C7A008] mb-8">Pesanan Berhasil!</h2>
+      <p class="text-center text-gray-700 mb-6">Terima kasih telah berbelanja di <strong>Alnay.id</strong>. Berikut adalah rincian pesanan Anda:</p>
+
+      <!-- Bukti Pesanan -->
+      <div id="buktiPesanan" class="bg-white p-6 rounded-xl shadow space-y-4">
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Informasi Pelanggan</h3>
+          <p><strong>Nama:</strong> <span id="namaPelanggan">-</span></p>
+          <p><strong>Alamat:</strong> <span id="alamatPelanggan">-</span></p>
+          <p><strong>Telepon:</strong> <span id="teleponPelanggan">-</span></p>
+          <p><strong>Metode Pembayaran:</strong> <span id="metodePembayaran">-</span></p>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Daftar Produk</h3>
+          <ul id="daftarProduk" class="list-disc list-inside space-y-1 text-gray-700"></ul>
+        </div>
+
+        <div class="text-right font-semibold text-lg">Total: <span id="totalHarga" class="text-[#C7A008]">Rp0</span></div>
+      </div>
+
+      <!-- Tombol Cetak -->
+      <div class="mt-8 text-center">
+        <button onclick="cetakPDF()" class="bg-[#C7A008] text-white px-6 py-3 rounded-lg hover:bg-yellow-700 transition">Unduh Bukti Pesanan (PDF)</button>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="pelacakan.html" class="inline-block bg-[#C7A008] text-white py-3 px-6 rounded-lg hover:bg-yellow-600 transition"> Lacak Pengiriman </a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white text-center py-6 border-t mt-16">
+      <p class="text-gray-600">&copy; 2025 Alnay.id. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const pesanan = JSON.parse(sessionStorage.getItem('dataCheckout')) || {};
+      const keranjang = JSON.parse(sessionStorage.getItem('produkCheckout')) || [];
+
+      // Cek jika data tidak valid, redirect
+      if (!pesanan.nama || keranjang.length === 0) {
+        alert('Data pesanan tidak ditemukan. Anda akan diarahkan ke halaman utama.');
+        window.location.href = 'index.html';
+      }
+
+      document.getElementById('namaPelanggan').textContent = pesanan.nama || '-';
+      document.getElementById('alamatPelanggan').textContent = pesanan.alamat || '-';
+      document.getElementById('teleponPelanggan').textContent = pesanan.telepon || '-';
+      document.getElementById('metodePembayaran').textContent = formatMetode(pesanan.metode || '-');
+
+      function formatMetode(metode) {
+        switch (metode) {
+          case 'va_bca':
+            return 'Virtual Account BCA';
+          case 'va_bni':
+            return 'Virtual Account BNI';
+          case 'va_mandiri':
+            return 'Virtual Account Mandiri';
+          case 'cod':
+            return 'Cash on Delivery';
+          default:
+            return metode;
+        }
+      }
+
+      function formatRupiah(angka) {
+        return 'Rp' + angka.toLocaleString('id-ID');
+      }
+
+      const daftarProduk = document.getElementById('daftarProduk');
+      let total = 0;
+
+      keranjang.forEach((item) => {
+        const li = document.createElement('li');
+        const harga = parseInt(item.harga.toString().replace(/[^0-9]/g, '')) || 0;
+        li.textContent = `${item.nama} (x${item.jumlah}) - ${formatRupiah(harga)}`;
+        daftarProduk.appendChild(li);
+        total += harga * item.jumlah;
+      });
+
+      document.getElementById('totalHarga').textContent = formatRupiah(total);
+
+      function cetakPDF() {
+        const element = document.getElementById('buktiPesanan');
+        html2pdf(element, {
+          margin: 0.5,
+          filename: 'bukti-pesanan.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        });
+      }
+
+      // Auto-hapus session saat keluar dari halaman
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.removeItem('dataCheckout');
+        sessionStorage.removeItem('produkCheckout');
+      });
+    </script>
+  </body>
+</html>

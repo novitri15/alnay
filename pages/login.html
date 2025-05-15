@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Alnay.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-[#FAF6EF] min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-2xl rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-10 max-w-4xl w-full">
+      <!-- Ilustrasi (opsional) -->
+      <div class="hidden md:flex flex-col justify-center w-1/2 items-center">
+        <img src="../assets/images/logo.jpg" alt="Login" class="w-3/4" />
+        <p class="mt-6 text-gray-500 text-center text-sm">Selamat datang di Alnay.id — Fashion Modern & Tradisional Lampung</p>
+      </div>
+
+      <!-- Form Login -->
+      <div class="w-full md:w-1/2">
+        <h1 class="text-3xl font-bold text-[#C7A008] mb-6 text-center">Masuk ke Alnay.id</h1>
+
+        <form id="formLogin" class="space-y-5">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" required placeholder="contoh@alnay.id" class="w-full mt-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C7A008]" />
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <div class="relative">
+              <input type="password" id="password" required placeholder="••••••••" class="w-full mt-1 p-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C7A008]" />
+              <button type="button" onclick="togglePassword()" class="absolute top-1/2 right-3 transform -translate-y-1/2 text-sm text-gray-500">👁️</button>
+            </div>
+          </div>
+
+          <p id="loginError" class="text-red-500 text-sm hidden">Email atau password salah.</p>
+
+          <button type="submit" class="w-full bg-[#C7A008] text-white font-semibold py-3 rounded-xl hover:bg-yellow-700 transition duration-300">Masuk</button>
+
+          <p class="text-sm text-center mt-4 text-gray-600">Belum punya akun? <a href="register.html" class="text-[#C7A008] font-semibold hover:underline">Daftar di sini</a></p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const users = [
+        { email: 'admin@alnay.id', password: 'admin123', role: 'admin' },
+        { email: 'user@alnay.id', password: 'user123', role: 'user' },
+      ];
+
+      document.getElementById('formLogin').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const user = users.find((u) => u.email === email && u.password === password);
+
+        if (user) {
+          sessionStorage.setItem('currentUser', JSON.stringify(user));
+          window.location.href = user.role === 'admin' ? 'admin-dashboard.html' : 'index.html';
+        } else {
+          document.getElementById('loginError').classList.remove('hidden');
+        }
+      });
+
+      function togglePassword() {
+        const passField = document.getElementById('password');
+        passField.type = passField.type === 'password' ? 'text' : 'password';
+      }
+    </script>
+  </body>
+</html>

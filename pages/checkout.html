@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Alnay.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: 'Cinzel', serif;
+      }
+    </style>
+  </head>
+  <body class="bg-[#FAF6EF] text-gray-800">
+    <!-- Navbar -->
+    <header class="bg-white shadow sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-[#C7A008]">Alnay.id</h1>
+        <nav class="space-x-6">
+          <a href="index.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Beranda</a>
+          <a href="products.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Katalog</a>
+          <a href="cart.html" class="text-gray-700 hover:text-[#C7A008] font-medium">Keranjang</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-10">
+      <!-- Produk di Keranjang -->
+      <div>
+        <h2 class="text-3xl font-bold text-[#C7A008] mb-6">Produk yang Dipilih</h2>
+        <div id="keranjangList" class="space-y-4"></div>
+        <p id="totalHarga" class="text-xl font-semibold mt-6">Total: <span class="text-[#C7A008]">Rp0</span></p>
+      </div>
+
+      <!-- Formulir -->
+      <div>
+        <h2 class="text-3xl font-bold text-[#C7A008] mb-6">Informasi Pengiriman</h2>
+        <form id="formCheckout" class="space-y-6">
+          <input type="text" id="nama" placeholder="Nama Lengkap" required class="w-full p-3 border border-gray-300 rounded-lg" />
+          <textarea id="alamat" placeholder="Alamat Pengiriman" required class="w-full p-3 border border-gray-300 rounded-lg" rows="3"></textarea>
+          <input type="tel" id="telepon" placeholder="Nomor Telepon" required class="w-full p-3 border border-gray-300 rounded-lg" />
+
+          <!-- ✅ Tambahan: Pilih metode pengambilan -->
+          <label for="pengambilan" class="block text-sm font-semibold text-gray-700">Metode Pengambilan</label>
+          <select id="pengambilan" required class="w-full p-3 border border-gray-300 rounded-lg">
+            <option value="ambil_toko">Ambil di Toko</option>
+            <option value="dikirim">Dikirim via Ekspedisi</option>
+          </select>
+
+          <!-- ✅ Tambahan: Opsi ekspedisi -->
+          <div id="opsiEkspedisi" class="hidden">
+            <label class="block text-sm font-semibold text-gray-700 mt-2">Pilih Ekspedisi</label>
+            <select id="ekspedisi" class="w-full p-3 border border-gray-300 rounded-lg">
+              <option value="jne">JNE</option>
+              <option value="jnt">J&T</option>
+              <option value="sicepat">SiCepat</option>
+            </select>
+          </div>
+
+          <!-- Pembayaran -->
+          <label for="metodePembayaran" class="block text-sm font-semibold text-gray-700">Metode Pembayaran</label>
+          <select id="metodePembayaran" required class="w-full p-3 border border-gray-300 rounded-lg">
+            <option value="va_bca">Virtual Account BCA</option>
+            <option value="va_bni">Virtual Account BNI</option>
+            <option value="va_mandiri">Virtual Account Mandiri</option>
+            <option value="cod">Cash on Delivery</option>
+          </select>
+
+          <button type="submit" class="w-full bg-[#C7A008] text-white py-3 rounded-lg hover:bg-yellow-600 transition">Proses Pembayaran</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white text-center py-6 border-t mt-16">
+      <p class="text-gray-600">&copy; 2025 Alnay.id. All rights reserved.</p>
+    </footer>
+
+    <!-- Popup Pembayaran -->
+    <div id="popupPembayaran" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white rounded-xl w-full max-w-md p-6 space-y-4 text-center relative">
+        <h3 class="text-xl font-bold text-gray-800">Pembayaran Virtual Account</h3>
+        <p class="text-sm text-gray-500">Silakan transfer ke nomor virtual account berikut:</p>
+        <div class="bg-gray-100 p-4 rounded-lg text-lg font-semibold text-blue-600 tracking-wide select-all" id="vaNumber">1234 5678 9012 3456</div>
+        <button onclick="salinVA()" class="text-sm text-blue-500 hover:underline">Salin Nomor</button>
+        <p class="text-gray-500 text-sm">Batas waktu pembayaran: 24 jam</p>
+        <button onclick="selesaiPembayaran()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 mt-4">Selesai</button>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-[100]">
+      <div class="bg-white px-6 py-4 rounded-xl shadow text-center">
+        <div class="loader border-4 border-[#C7A008] border-t-transparent w-12 h-12 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-gray-700 font-medium">Memproses pembayaran...</p>
+      </div>
+    </div>
+
+    <script>
+      //  Ambil hanya produk yang diceklis dari sessionStorage
+      let keranjang = JSON.parse(sessionStorage.getItem('produkCheckout')) || [];
+      const keranjangList = document.getElementById('keranjangList');
+      const totalHargaElement = document.getElementById('totalHarga');
+
+      function hitungTotal() {
+        return keranjang.reduce((total, item) => {
+          let harga = String(item.harga).replace('Rp', '').replace(/\./g, '').replace(',', '').trim();
+          return total + parseInt(harga) * item.jumlah;
+        }, 0);
+      }
+
+      function renderKeranjang() {
+        keranjangList.innerHTML = '';
+        if (keranjang.length === 0) {
+          keranjangList.innerHTML = '<p class="text-gray-600 text-center">Keranjang Anda kosong.</p>';
+        } else {
+          keranjang.forEach((item, index) => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'bg-white p-4 rounded-xl shadow flex justify-between items-center';
+            itemEl.innerHTML = `
+              <div class="flex items-center gap-4">
+                <img src="${item.gambar}" class="w-20 h-20 object-cover rounded" />
+                <div>
+                  <h4 class="font-semibold">${item.nama}</h4>
+                  <p class="text-[#C7A008]">Rp${item.harga}</p>
+                </div>
+              </div>
+              <p>x${item.jumlah}</p>
+            `;
+            keranjangList.appendChild(itemEl);
+          });
+        }
+        totalHargaElement.innerHTML = `Total: <span class="text-[#C7A008]">Rp${hitungTotal().toLocaleString()}</span>`;
+      }
+
+      // Show/hide ekspedisi berdasarkan pilihan pengambilan
+      document.getElementById('pengambilan').addEventListener('change', function () {
+        const opsi = this.value;
+        document.getElementById('opsiEkspedisi').classList.toggle('hidden', opsi !== 'dikirim');
+      });
+
+      document.getElementById('formCheckout').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const metode = document.getElementById('metodePembayaran').value;
+        const pengambilan = document.getElementById('pengambilan').value;
+        const ekspedisi = document.getElementById('ekspedisi')?.value || null;
+
+        const pesanan = {
+          nama: document.getElementById('nama').value,
+          alamat: document.getElementById('alamat').value,
+          telepon: document.getElementById('telepon').value,
+          metode: metode,
+          pengambilan: pengambilan,
+          ekspedisi: ekspedisi,
+          produk: keranjang,
+          total: hitungTotal(),
+        };
+
+        sessionStorage.setItem('dataCheckout', JSON.stringify(pesanan));
+        sessionStorage.setItem('produkCheckout', JSON.stringify(keranjang));
+
+        if (pengambilan === 'dikirim') {
+          const dataPengiriman = {
+            nama: pesanan.nama,
+            alamat: pesanan.alamat,
+            ekspedisi: pesanan.ekspedisi,
+            resi: 'ALNAY' + Date.now().toString().slice(-6),
+          };
+          sessionStorage.setItem('dataPengiriman', JSON.stringify(dataPengiriman));
+        }
+
+        if (metode.startsWith('va_')) {
+          const bankLogoMap = {
+            va_bca: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/BCA_logo.svg/1200px-BCA_logo.svg.png',
+            va_bni: 'https://upload.wikimedia.org/wikipedia/commons/7/75/Logo_BNI.png',
+            va_mandiri: 'https://upload.wikimedia.org/wikipedia/id/9/9f/Logo_Bank_Mandiri.png',
+          };
+          const vaNumberMap = {
+            va_bca: '1234 5678 9012 3456',
+            va_bni: '7890 1234 5678 9012',
+            va_mandiri: '5678 9012 3456 7890',
+          };
+
+          document.getElementById('popupPembayaran').classList.remove('hidden');
+          document.getElementById('vaNumber').textContent = vaNumberMap[metode];
+        } else {
+          alert('Pesanan dengan metode COD akan segera diproses!');
+          if (metode.startsWith('va_')) {
+            document.getElementById('popupPembayaran').classList.remove('hidden');
+            document.getElementById('vaNumber').textContent = vaNumberMap[metode];
+            sessionStorage.setItem('ekspedisi', ekspedisi || 'Ambil di Toko');
+            sessionStorage.setItem('nomorResi', 'JNE123456789ID'); // bisa dibuat random juga
+          } else {
+            alert('Pesanan dengan metode COD akan segera diproses!');
+            sessionStorage.setItem('ekspedisi', ekspedisi || 'Ambil di Toko');
+            sessionStorage.setItem('nomorResi', 'JNE123456789ID');
+            window.location.href = 'konfirmasi.html';
+          }
+        }
+      });
+
+      function selesaiPembayaran() {
+        document.getElementById('popupPembayaran').classList.add('hidden');
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+
+        setTimeout(() => {
+          window.location.href = 'konfirmasi.html';
+        }, 2500);
+      }
+
+      function salinVA() {
+        const vaText = document.getElementById('vaNumber').innerText;
+        navigator.clipboard.writeText(vaText);
+        alert('Nomor virtual account berhasil disalin!');
+      }
+
+      renderKeranjang();
+    </script>
+  </body>
+</html>
